@@ -1,0 +1,43 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Drive 1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Slurp"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "half drive"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

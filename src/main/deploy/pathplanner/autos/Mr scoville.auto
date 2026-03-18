@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Drive 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "half drive"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot 2"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
