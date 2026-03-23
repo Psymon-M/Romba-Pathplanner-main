@@ -1,0 +1,135 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.0,
+        "y": 7.43
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.999999999999999,
+        "y": 7.43
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.790950704225352,
+        "y": 6.797517605633803
+      },
+      "prevControl": {
+        "x": 7.535457746478874,
+        "y": 7.532059859154931
+      },
+      "nextControl": {
+        "x": 7.943443717475923,
+        "y": 6.359100192538409
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.16818661971831,
+        "y": 1.6078169014084507
+      },
+      "prevControl": {
+        "x": 8.023010563380282,
+        "y": 3.1248063380281708
+      },
+      "nextControl": {
+        "x": 7.045455850958029,
+        "y": 1.3900161704649732
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.050404929577465,
+        "y": 7.43
+      },
+      "prevControl": {
+        "x": 7.120281690140844,
+        "y": 7.643838028169014
+      },
+      "nextControl": {
+        "x": 5.805253711297926,
+        "y": 7.381001222708563
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.0,
+        "y": 7.43
+      },
+      "prevControl": {
+        "x": 3.0,
+        "y": 7.679999999999997
+      },
+      "nextControl": {
+        "x": 3.0,
+        "y": 7.18
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.0,
+        "y": 5.0
+      },
+      "prevControl": {
+        "x": 2.984489436619719,
+        "y": 7.324471830985915
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.1111111111111112,
+      "rotationDegrees": -86.8898026131547
+    },
+    {
+      "waypointRelativePos": 1.8164251207729476,
+      "rotationDegrees": -88.22979328086761
+    },
+    {
+      "waypointRelativePos": 2.9347826086956568,
+      "rotationDegrees": -89.67682653647246
+    },
+    {
+      "waypointRelativePos": 3.792270531400972,
+      "rotationDegrees": -88.1712569806737
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -32.437408749211464
+  },
+  "reversed": false,
+  "folder": "Path planer red aliance ",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

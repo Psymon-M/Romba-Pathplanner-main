@@ -2,8 +2,14 @@
   "robotWidth": 0.99695,
   "robotLength": 0.7493,
   "holonomicMode": true,
-  "pathFolders": [],
-  "autoFolders": [],
+  "pathFolders": [
+    "Path planer red aliance ",
+    "Path planer blue aliance"
+  ],
+  "autoFolders": [
+    "Red path planer Auton ",
+    "Blue path planer Auton "
+  ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,

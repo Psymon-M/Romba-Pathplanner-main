@@ -5,7 +5,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+
+import com.ctre.phoenix6.Orchestra;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.hardware.TalonFXS;
 import static edu.wpi.first.units.Units.*;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
@@ -30,10 +33,14 @@ public class RobotContainer {
     private final TalonFX mechanismMotorLauncherforward = new TalonFX(3);
     private final TalonFX mechanismMotorIntake = new TalonFX(4);
     private final TalonFX mechanismMotorLauncherbackward = new TalonFX(5);
+    private final TalonFXS mechanismmotorminion = new TalonFXS (6);
     private final DigitalInput myLimitSwitch = new DigitalInput(2);
-    private final Servo mySmartServo = new Servo(9);
-
+    private final Servo mySmartServo = new Servo(9);    
+    private final Servo Myverticalservo = new Servo(0);
    private final SendableChooser<Command> autoChooser;
+    Orchestra orchestra = new Orchestra();
+   
+
     
     private double MaxSpeed = 0.75 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.50).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -49,13 +56,20 @@ public class RobotContainer {
     private final CommandXboxController joystick = new CommandXboxController(0);
   private final CommandXboxController joystick2 = new CommandXboxController(1);
   private final CommandXboxController joystickOperator = new CommandXboxController(2);
-    public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+
+  public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
    
 
     public RobotContainer() {
-
-    NamedCommands.registerCommand("Shoot", shootCommand());
+    
+    
+        orchestra.loadMusic("Fun.chrp");
+    
+     orchestra.addInstrument(mechanismMotorLauncherforward);
+    orchestra.addInstrument(mechanismMotorLauncherbackward);
+    orchestra.addInstrument(mechanismmotorminion);
+        NamedCommands.registerCommand("Shoot", shootCommand());
     NamedCommands.registerCommand("Slurp", IntakeCommand());
     NamedCommands.registerCommand("Short Shoot", ShortshootCommand());
     NamedCommands.registerCommand("Short Slurp", ShortIntakeCommand());
@@ -126,12 +140,15 @@ public class RobotContainer {
         );
 
 
-        joystickOperator.rightBumper().whileTrue(
-        Commands.startEnd(
-                () -> mechanismMotorIntake.set(-0.55), 
-                () -> mechanismMotorIntake.stopMotor() 
-            )
-        );
+        joystickOperator.button(2)
+            .and(joystickOperator.button(5))
+            .and(joystickOperator.button(6))
+            .whileTrue(
+                Commands.startEnd(
+                    () -> mechanismMotorIntake.set(0.75), 
+                    () -> mechanismMotorIntake.stopMotor() 
+                )
+            );
        joystickOperator.button(2).whileTrue(
             Commands.startEnd(
                 () -> mySmartServo.set(-10.0),
@@ -153,13 +170,28 @@ public class RobotContainer {
                 () -> mechanismMotorIntake.stopMotor() 
             )
         );
+    joystickOperator.button(4).whileTrue(
+    Commands.startEnd(
+        () -> Myverticalservo.set(1),
+        () -> Myverticalservo.set(0)
+    )
+    );
+    
+    
     joystick2.button(2).whileTrue(
             Commands.startEnd(
                 () -> MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond), 
                 () -> MaxSpeed = 0.75 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond)
             )
         );
-    autoChooser = new SendableChooser<>();
+    
+        
+joystickOperator.start().onTrue(Commands.runOnce(() -> orchestra.play()));
+
+
+joystickOperator.back().onTrue(Commands.runOnce(() -> orchestra.pause()));
+    
+        autoChooser = new SendableChooser<>();
     
     autoChooser.setDefaultOption("Default auto", defaultAutoCommand());
     autoChooser.addOption("Rizz", new PathPlannerAuto("Sigma Auto")); 
@@ -167,6 +199,8 @@ public class RobotContainer {
      autoChooser.addOption("Path blue right", new PathPlannerAuto("Roomba run")); 
    autoChooser.addOption("Meter test", new PathPlannerAuto("Meter test")); 
      autoChooser.addOption("TEST", new PathPlannerAuto("Straight")); 
+   autoChooser.addOption("Blue Right Score", new PathPlannerAuto("Mr scoville")); 
+     autoChooser.addOption("Blue Left Score", new PathPlannerAuto("Blue Left Score")); 
    autoChooser.addOption("Do Nothing", Commands.none());
   
        

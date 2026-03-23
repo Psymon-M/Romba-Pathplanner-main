@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Blue Right 1"
+            "pathName": "Blue left 1"
           }
         },
         {
@@ -19,32 +19,19 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.5
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Blue Right 2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Slurp"
-                }
-              }
-            ]
+            "waitTime": 3.0
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Blue right 3"
+            "pathName": "Blue Left 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Blue Left 3"
           }
         },
         {
@@ -56,13 +43,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.5
+            "waitTime": 3.0
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Blue Right 4"
+            "pathName": "Blue Left 4"
           }
         }
       ]

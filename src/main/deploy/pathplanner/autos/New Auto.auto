@@ -7,37 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Drive 1"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Slurp"
+            "pathName": "Start of left path to shoot "
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "half drive"
+            "pathName": "Second part of start of left path "
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Shoot 2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
+            "pathName": "Third part of left path "
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Red path planer Auton ",
   "choreoAuto": false
 }

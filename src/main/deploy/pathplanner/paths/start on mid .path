@@ -3,37 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.0,
-        "y": 0.8
+        "x": 3.591285211267606,
+        "y": 4.019031690140846
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.5154049295774659,
-        "y": 0.6379401408450712
+        "x": 2.984489436619719,
+        "y": 5.056971830985915
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.6,
-        "y": 4.0
+        "x": 3.0,
+        "y": 5.0
       },
       "prevControl": {
-        "x": 2.360475352109667,
-        "y": 1.2374823943651299
+        "x": 3.5908274647887324,
+        "y": 3.93012323943662
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.25,
-      "rotationDegrees": -90.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -47,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.2112567744973
+    "rotation": -35.134193056915635
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Path planer red aliance ",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }
