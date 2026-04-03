@@ -24,7 +24,6 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
-import edu.wpi.first.math.geometry.Translation2d;
 import frc.robot.LimelightHelpers;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 import edu.wpi.first.math.MathUtil;
@@ -247,9 +246,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 m_hasAppliedOperatorPerspective = true;
             });
         }
-    }
+    
         /* NEW: Loop through all 4 Limelights and fuse their vision data */
-  /*      for (String limelightName : m_limelightNames) {
+     for (String limelightName : m_limelightNames) {
             // Get the BotPose estimate from the Limelight based on Blue Alliance origin
             LimelightHelpers.PoseEstimate poseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
             
@@ -275,7 +274,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             }
         }
     }
-/ */
+
     private void startSimThread() {
         m_lastSimTime = Utils.getCurrentTimeSeconds();
         m_simNotifier = new Notifier(() -> {
@@ -304,11 +303,11 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     
 
 public Command trackAprilTag(Supplier<Double> xSupplier, Supplier<Double> ySupplier) {
-    PIDController rotationPID = new PIDController(0.1, 0.0, 0.01);
+    PIDController rotationPID = new PIDController(0.1, 0.0, 0);
     
 
     SwerveRequest.FieldCentric visionRequest = new SwerveRequest.FieldCentric();
-    double MAX_SPEED_MPS = 4.5; 
+    double MAX_SPEED_MPS = 1.0; 
 
     return applyRequest(() -> {
   
@@ -327,7 +326,7 @@ public Command trackAprilTag(Supplier<Double> xSupplier, Supplier<Double> ySuppl
             if (Math.abs(tx) < 1.5) {
                 rotationRate = 0.0;
             } else {
-                rotationRate = -rotationPID.calculate(tx, 0.0);
+                rotationRate = rotationPID.calculate(tx, 0.0);
             }
         }
         return visionRequest

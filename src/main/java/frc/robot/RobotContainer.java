@@ -22,7 +22,17 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.LinearServo;
+
+import frc.robot.subsystems.LEDSubsystem; 
 import edu.wpi.first.math.MathUtil;
+import static edu.wpi.first.units.Units.*;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.ctre.phoenix6.CANBus;
+import com.ctre.phoenix6.controls.FireAnimation;
+import com.ctre.phoenix6.hardware.CANdle;
+import com.ctre.phoenix6.signals.AnimationDirectionValue;
+import com.ctre.phoenix6.signals.RGBWColor;
 
 public class RobotContainer {
     private final TalonFX      mechanismMotorKicker           = new TalonFX(1);
@@ -34,8 +44,11 @@ public class RobotContainer {
     public  final LinearServo  servo2                         = new LinearServo();
     private final SparkFlex vortexMotor1 = new SparkFlex(10, MotorType.kBrushless);
     
-    // --- NEW LINEAR ACTUATOR ADDED HERE ---
+    // ADD THIS LINE:
+    private final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
+    
     private final Servo myLinearActuator = new Servo(0);
+    
     
     private final SendableChooser<Command> autoChooser;
     Orchestra                  orchestra                      = new Orchestra();
@@ -264,8 +277,8 @@ joystickOperator.button(6).whileTrue(
        
        drivetrain.setDefaultCommand(
             drivetrain.applyRequest(() ->
-                drive.withVelocityX((joystick.getLeftY()) * MaxSpeed) 
-                     .withVelocityY((joystick.getLeftX()) * MaxSpeed) 
+                drive.withVelocityX((joystick.getLeftX()) * MaxSpeed) 
+                     .withVelocityY((-joystick.getLeftY()) * MaxSpeed) 
                      .withRotationalRate((-joystick2.getLeftX()) * MaxAngularRate) 
             )
         );
