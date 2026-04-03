@@ -6,17 +6,15 @@ package frc.robot;
 
 import com.ctre.phoenix6.HootAutoReplay;
 
-import frc.robot.subsystems.limelightTracking;
+import edu.wpi.first.wpilibj.AnalogInput;
+//import frc.robot.subsystems.limelightTracking;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
 
-
-    //define subsystems
-    limelightTracking limelight = new limelightTracking();
-
+    private final AnalogInput fan = new AnalogInput(3);
 
     private Command m_autonomousCommand;
 
@@ -60,7 +58,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousPeriodic() {
-                double currentID = LimelightHelpers.getFiducialID("limelight-turret");
+   /*            double currentID = LimelightHelpers.getFiducialID("limelight-turret");
 
         if (currentID == 8) {
             // Just pass the error (tx) to the subsystem
@@ -69,7 +67,7 @@ public class Robot extends TimedRobot {
         if (currentID == 24) {
             // Just pass the error (tx) to the subsystem
             limelight.track(); 
-          }
+          }*/
     }
 
     @Override
@@ -84,7 +82,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
-                double currentID = LimelightHelpers.getFiducialID("limelight-turret");
+       /*        double currentID = LimelightHelpers.getFiducialID("limelight-turret");
 
         if (currentID == 10) {
             // Just pass the error (tx) to the subsystem
@@ -93,7 +91,10 @@ public class Robot extends TimedRobot {
         if (currentID == 26) {
             // Just pass the error (tx) to the subsystem
             limelight.track(); 
-          }
+          }*/
+
+        fan.setAccumulatorInitialValue(999999999);
+
     }
 
     @Override
@@ -105,9 +106,7 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void testPeriodic() {
-
-    }
+    public void testPeriodic() {}
 
     @Override
     public void testExit() {}

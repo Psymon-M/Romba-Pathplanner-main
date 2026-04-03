@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.*;
-
+import edu.wpi.first.math.controller.PIDController;
 import java.util.function.Supplier;
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
@@ -24,10 +24,10 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
-
+import edu.wpi.first.math.geometry.Translation2d;
 import frc.robot.LimelightHelpers;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
-
+import edu.wpi.first.math.MathUtil;
 
 public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Subsystem {
     private static final double kSimLoopPeriod = 0.004; // 4 ms
@@ -37,14 +37,15 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private final String[] m_limelightNames = {
         "limelight-one", 
         "limelight-two", 
-    /*   "limelight-left", 
-        "limelight-right" */
+       "limelight-left", 
+        "limelight-right" 
     };
-
+        private final PIDController m_snapRotationPID = new PIDController(4.0, 0, 0); 
+        private final PIDController m_snapDrivePID = new PIDController(2.0, 0, 0);
     /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
     private static final Rotation2d kBlueAlliancePerspectiveRotation = Rotation2d.kZero;
     /* Red alliance sees forward as 180 degrees (toward blue alliance wall) */
-    private static final Rotation2d kRedAlliancePerspectiveRotation = Rotation2d.k180deg;
+    private static final Rotation2d kRedAlliancePerspectiveRotation = Rotation2d.kZero;
     /* Keep track if we've ever applied the operator perspective before or not */
     private boolean m_hasAppliedOperatorPerspective = false;
 
@@ -246,9 +247,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 m_hasAppliedOperatorPerspective = true;
             });
         }
-
+    }
         /* NEW: Loop through all 4 Limelights and fuse their vision data */
-        for (String limelightName : m_limelightNames) {
+  /*      for (String limelightName : m_limelightNames) {
             // Get the BotPose estimate from the Limelight based on Blue Alliance origin
             LimelightHelpers.PoseEstimate poseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
             
@@ -274,7 +275,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             }
         }
     }
-
+/ */
     private void startSimThread() {
         m_lastSimTime = Utils.getCurrentTimeSeconds();
         m_simNotifier = new Notifier(() -> {
@@ -300,12 +301,39 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         super.addVisionMeasurement(visionRobotPoseMeters, Utils.fpgaToCurrentTime(timestampSeconds), visionMeasurementStdDevs);
     }
 
-    public Command drivebackwardCommand(double timeSeconds, double speedMetersPerSecond) {
-        SwerveRequest.RobotCentric forwardRequest = new SwerveRequest.RobotCentric()
-            .withVelocityX(-speedMetersPerSecond)
-            .withVelocityY(0.0)
-            .withRotationalRate(0.0);
+    
+
+public Command trackAprilTag(Supplier<Double> xSupplier, Supplier<Double> ySupplier) {
+    PIDController rotationPID = new PIDController(0.1, 0.0, 0.01);
+    
+
+    SwerveRequest.FieldCentric visionRequest = new SwerveRequest.FieldCentric();
+    double MAX_SPEED_MPS = 4.5; 
+
+    return applyRequest(() -> {
+  
+        double rawX = MathUtil.applyDeadband(xSupplier.get(), 0.1);
+        double rawY = MathUtil.applyDeadband(ySupplier.get(), 0.1);
+        double moveX = rawX * MAX_SPEED_MPS;
+        double moveY = rawY * MAX_SPEED_MPS;
         
-        return applyRequest(() -> forwardRequest).withTimeout(timeSeconds);
-    }
+        double rotationRate = 0.0;
+        String trackingLimelight = "limelight-two"; 
+
+       if (LimelightHelpers.getTV(trackingLimelight) && 
+            LimelightHelpers.getFiducialID(trackingLimelight) == 26) {
+            
+            double tx = LimelightHelpers.getTX(trackingLimelight);
+            if (Math.abs(tx) < 1.5) {
+                rotationRate = 0.0;
+            } else {
+                rotationRate = -rotationPID.calculate(tx, 0.0);
+            }
+        }
+        return visionRequest
+            .withVelocityX(moveX) 
+            .withVelocityY(moveY)
+            .withRotationalRate(rotationRate);
+    });
+}
 }
